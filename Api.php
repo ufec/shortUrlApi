@@ -33,7 +33,7 @@ class Chrise
 
     private function url($url)
     {
-        $content = file_get_contents("https://vip.video.qq.com/fcgi-bin/comm_cgi?name=short_url&need_short_url=1&url=$url");
+        $content = file_get_contents("https://vip.video.qq.com/fcgi-bin/comm_cgi?name=short_url&need_short_url=1&url=https://c.pc.qq.com/middleb.html?pfurl=$url");
         $content = mb_substr($content,stripos($content, '{'), strripos($content, '}')-stripos($content, '{')+1, 'UTF-8');
         $data = json_decode($content, 1);
         if ($data['msg'] == 'ok' && $data['short_url']) {
@@ -67,7 +67,7 @@ class Chrise
 
     private function returnMsg($code, $msg, $data)
     {
-        return json_encode(['code'=>$code, 'msg'=>$msg, 'data'=>$data]);
+        return json_encode(['code'=>$code, 'msg'=>$msg, 'data'=>$data], JSON_UNESCAPED_UNICODE);
     }
 
     private function curl($url, $method='GET', $params=array(), $getinfo=false)
@@ -132,4 +132,4 @@ class Chrise
 	}
 }
 
-new Chrise("https://www.ufec.cn");
+new Chrise("https://www.ufec.cn", "url");
